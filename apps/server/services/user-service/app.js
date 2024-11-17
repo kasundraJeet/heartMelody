@@ -1,29 +1,14 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const session = require("express-session");
-const passport = require("./utils/passportConfig");
-const userRoutes = require("./routes/userRoutes");
-const db = require("./models");
-require("dotenv").config();
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const authRouter = require('./src/routers/authRouter');
 
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
-app.use(
-  session({
-    secret: process.env.JWT_SECRET,
-    resave: false,
-    saveUninitialized: true,
-  })
-);
-app.use(passport.initialize());
-app.use(passport.session());
+app.use('/api/auth', authRouter);
 
-app.use("/api/users", userRoutes);
-
-db.sequelize.sync().then(() => {
-  console.log("Database connected");
+app.listen(3000, () => {
+  console.log('Server started on port 3000');
 });
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
