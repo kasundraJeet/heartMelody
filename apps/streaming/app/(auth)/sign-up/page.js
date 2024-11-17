@@ -1,7 +1,8 @@
-'use client'
+"use client";
 import Image from "next/image";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { post } from "@/utils/apiHelper";
 
 export default function SignUp() {
   const {
@@ -10,9 +11,19 @@ export default function SignUp() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log("Sign-Up Data:", data);
-    // Add your sign-up logic (e.g., API call) here
+    try {
+      const data = await post("/api/users/signup", {
+        username: name,
+        email: email,
+        password: password,
+        number: phone,
+      });
+      console.log("Post created:", data);
+    } catch (error) {
+      console.error("Error creating post:", error);
+    }
   };
 
   return (
@@ -24,7 +35,10 @@ export default function SignUp() {
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* Name Field */}
           <div className="mb-4">
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-700"
+            >
               Full Name
             </label>
             <input
@@ -34,7 +48,10 @@ export default function SignUp() {
               placeholder="Enter your full name"
               {...register("name", {
                 required: "Name is required",
-                minLength: { value: 2, message: "Name must be at least 2 characters" },
+                minLength: {
+                  value: 2,
+                  message: "Name must be at least 2 characters",
+                },
               })}
               className={`w-full px-4 py-2 border ${
                 errors.name ? "border-red-500" : "border-gray-300"
@@ -49,7 +66,10 @@ export default function SignUp() {
 
           {/* Phone Number Field */}
           <div className="mb-4">
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="phone"
+              className="block text-sm font-medium text-gray-700"
+            >
               Phone Number
             </label>
             <input
@@ -71,13 +91,18 @@ export default function SignUp() {
               }`}
             />
             {errors.phone && (
-              <p className="text-sm text-red-500 mt-1">{errors.phone.message}</p>
+              <p className="text-sm text-red-500 mt-1">
+                {errors.phone.message}
+              </p>
             )}
           </div>
 
           {/* Email Field */}
           <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
               Email Address
             </label>
             <input
@@ -99,13 +124,18 @@ export default function SignUp() {
               }`}
             />
             {errors.email && (
-              <p className="text-sm text-red-500 mt-1">{errors.email.message}</p>
+              <p className="text-sm text-red-500 mt-1">
+                {errors.email.message}
+              </p>
             )}
           </div>
 
           {/* Password Field */}
           <div className="mb-6">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
               Password
             </label>
             <input
@@ -127,7 +157,9 @@ export default function SignUp() {
               }`}
             />
             {errors.password && (
-              <p className="text-sm text-red-500 mt-1">{errors.password.message}</p>
+              <p className="text-sm text-red-500 mt-1">
+                {errors.password.message}
+              </p>
             )}
           </div>
 
@@ -150,9 +182,7 @@ export default function SignUp() {
         {/* Social Login Buttons */}
         <div className="space-y-4">
           {/* Google Login Button */}
-          <button
-            className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
+          <button className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
             <Image
               src="https://upload.wikimedia.org/wikipedia/commons/5/51/Google.png"
               alt="Google"
@@ -164,9 +194,7 @@ export default function SignUp() {
           </button>
 
           {/* Facebook Login Button */}
-          <button
-            className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
+          <button className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
             <Image
               src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
               alt="Facebook"
