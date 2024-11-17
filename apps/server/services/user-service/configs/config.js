@@ -1,10 +1,12 @@
+require("dotenv").config();
+
 module.exports = {
-    jwtSecret: 'your-secret-key',
-    db: {
-      host: 'localhost',
-      username: 'root',
-      password: '',
-      database: 'your_database_name',
-      dialect: 'mysql',
-    }
-  };
+  jwtSecret: process.env.JWT_SECRET,
+  db: {
+    host: process.env.DB_HOST,
+    username: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
+    dialect: "mysql",
+  },
+};
