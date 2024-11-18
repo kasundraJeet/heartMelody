@@ -11,7 +11,6 @@ const { jwtSecret } = require("../../configs/config");
 const { sendOTPToEmail, sendOTPToPhone } = require("../../utils/otpService");
 const { errorLog, successLog } = require("../../utils/logger");
 
-
 const signup = async (req, res) => {
   try {
     const { username, email, number, password } = req.body;
