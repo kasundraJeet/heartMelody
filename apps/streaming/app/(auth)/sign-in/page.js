@@ -1,7 +1,8 @@
-'use client'
+"use client";
 import Image from "next/image";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { post } from "@/utils/apiHelper";
 
 export default function SignIn() {
   const {
@@ -10,8 +11,16 @@ export default function SignIn() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Login Data:", data);
+  const onSubmit = async (value) => {
+    try {
+      const data = await post("/api/auth/signin", {
+        email: value.email,
+        password: value.password,
+      });
+      console.log("Post created:", data);
+    } catch (error) {
+      throw error;
+    }
   };
 
   return (
@@ -23,7 +32,10 @@ export default function SignIn() {
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* Email Field */}
           <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
               Email Address
             </label>
             <input
@@ -45,13 +57,18 @@ export default function SignIn() {
               }`}
             />
             {errors.email && (
-              <p className="text-sm text-red-500 mt-1">{errors.email.message}</p>
+              <p className="text-sm text-red-500 mt-1">
+                {errors.email.message}
+              </p>
             )}
           </div>
 
           {/* Password Field */}
           <div className="mb-6">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
               Password
             </label>
             <input
@@ -73,7 +90,9 @@ export default function SignIn() {
               }`}
             />
             {errors.password && (
-              <p className="text-sm text-red-500 mt-1">{errors.password.message}</p>
+              <p className="text-sm text-red-500 mt-1">
+                {errors.password.message}
+              </p>
             )}
           </div>
 
@@ -86,18 +105,14 @@ export default function SignIn() {
           </button>
         </form>
 
-
         <div className="my-4 flex items-center">
           <div className="flex-grow border-t border-gray-300"></div>
           <span className="mx-4 text-gray-500">OR</span>
           <div className="flex-grow border-t border-gray-300"></div>
         </div>
 
-
         <div className="space-y-4">
-          <button
-            className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
+          <button className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
             <Image
               src="https://upload.wikimedia.org/wikipedia/commons/5/51/Google.png"
               alt="Google"
@@ -108,9 +123,7 @@ export default function SignIn() {
             Login with Google
           </button>
 
-          <button
-            className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
+          <button className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
             <Image
               src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
               alt="Facebook"
