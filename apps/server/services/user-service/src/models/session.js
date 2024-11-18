@@ -31,10 +31,6 @@ const Session = sequelize.define('Session', {
     type: DataTypes.STRING,
     allowNull: true
   },
-  user_last_login: {
-    type: DataTypes.DATE,
-    allowNull: true
-  },
   session_otp: {
     type: DataTypes.STRING,
     allowNull: true

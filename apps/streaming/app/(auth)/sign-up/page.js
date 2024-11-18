@@ -11,18 +11,17 @@ export default function SignUp() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
-    console.log("Sign-Up Data:", data);
+  const onSubmit = async (value) => {
     try {
-      const data = await post("/api/users/signup", {
-        username: name,
-        email: email,
-        password: password,
-        number: phone,
+      const data = await post("/api/auth/signup", {
+        username: value.name,
+        email: value.email,
+        password: value.password,
+        number: value.phone,
       });
       console.log("Post created:", data);
     } catch (error) {
-      console.error("Error creating post:", error);
+      throw error;
     }
   };
 

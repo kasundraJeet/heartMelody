@@ -4,10 +4,11 @@ const {
   successResponse,
   errorResponse,
   validationErrorWithData,
+  successResponseWithData,
 } = require("../../utils/responseHandlers");
 const User = require("../models/user");
 const Session = require("../models/session");
-const { jwtSecret } = require("../../configs/config");
+const { jwtSecret, admin } = require("../../configs/config");
 const { sendOTPToEmail, sendOTPToPhone } = require("../../utils/otpService");
 const { errorLog, successLog } = require("../../utils/logger");
 
@@ -26,13 +27,19 @@ const signup = async (req, res) => {
       return validationErrorWithData(res, "Email is already taken", []);
     }
 
+    const existingNumber = await User.findOne({ where: { number } });
+    if (existingNumber) {
+      errorLog.error(`SignUp: User with number ${number} already exists`);
+      return validationErrorWithData(res, "number is already use", []);
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({
       username,
       email,
       number,
       password: hashedPassword,
-      role: 2, // User role by default
+      role: 2,
     });
 
     successLog.info(`SignUp: User ${username} signed up successfully`);
@@ -43,7 +50,9 @@ const signup = async (req, res) => {
   }
 };
 
-// SignIn: Authenticates user via email and password
+const { jwtSecret, admin } = require("../../configs/config");
+const bcrypt = require("bcryptjs");
+
 const signin = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -57,31 +66,71 @@ const signin = async (req, res) => {
       );
     }
 
-    const user = await User.findOne({ where: { email } });
-    if (!user) {
-      errorLog.error(`SignIn: User with email ${email} not found`);
-      return errorResponse(res, "User not found");
+    let user;
+    let isAdmin = false;
+
+    if (email === admin.email && password === admin.pass) {
+      isAdmin = true;
+      user = {
+        id: 0,
+        username: "Admin",
+        email: admin.email,
+        role: 1,
+      };
+    } else {
+      user = await User.findOne({ where: { email } });
+      if (!user) {
+        errorLog.error(`SignIn: User with email ${email} not found`);
+        return errorResponse(res, "User not found");
+      }
+
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        errorLog.error("SignIn: Invalid credentials");
+        return errorResponse(res, "Invalid credentials");
+      }
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      errorLog.error("SignIn: Invalid credentials");
-      return errorResponse(res, "Invalid credentials");
+    const token = jwt.sign(
+      { userId: user.id, role: isAdmin ? 1 : user.role },
+      jwtSecret,
+      { expiresIn: "1h" }
+    );
+
+    const sessionId = `session_${user.id}_${Date.now()}`;
+    const sessionExpiry = new Date(Date.now() + 1 * 60 * 60 * 1000);
+
+    if (!isAdmin) {
+      await Session.create({
+        session_id: sessionId,
+        session_email: user.email,
+        session_token: token,
+        session_expires_at: sessionExpiry,
+        session_user_id: user.id,
+        session_user_role: user.role,
+        user_fcm_token: user.fcm,
+        user_last_login: user.last_login,
+        password: user.password,
+        session_is_verified: true,
+      });
+
+      await User.update({ last_login: new Date() }, { where: { id: user.id } });
     }
 
-    const token = jwt.sign({ userId: user.id, role: user.role }, jwtSecret, {
-      expiresIn: "1h",
+    successLog.info(
+      `SignIn: User ${isAdmin ? "Admin" : user.email} signed in successfully`
+    );
+    return successResponseWithData(res, "User signed in successfully", {
+      token,
+      sessionId: isAdmin ? null : sessionId,
+      role: isAdmin ? 1 : user.role,
     });
-
-    successLog.info(`SignIn: User ${email} signed in successfully`);
-    successResponseWithData(res, "User signed in successfully", { token });
   } catch (error) {
     errorLog.error(`SignIn Error: ${error.message}`);
-    errorResponse(res, "Error signing in");
+    return errorResponse(res, "Error signing in");
   }
 };
 
-// Forget Password: Send OTP via email or phone
 const forgotPassword = async (req, res) => {
   try {
     const { email, number } = req.body;
@@ -110,12 +159,10 @@ const forgotPassword = async (req, res) => {
       }
     }
 
-    // Generate OTP
     const otp = generateOTP();
-    const otpExpiry = new Date(Date.now() + 15 * 60 * 1000); // OTP valid for 15 minutes
+    const otpExpiry = new Date(Date.now() + 15 * 60 * 1000);
 
-    // Save OTP and details to the Session table
-    const sessionId = `session_${user.id}_${Date.now()}`; // Unique session ID
+    const sessionId = `session_${user.id}_${Date.now()}`;
     await Session.create({
       session_id: sessionId,
       session_email: user.email,

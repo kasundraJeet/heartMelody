@@ -19,3 +19,19 @@
 {"level":"error","message":"SignIn: User with email dsdds@gamail.com not found"}
 {"level":"error","message":"SignIn: User with email dsdds@gamail.com not found"}
 {"level":"error","message":"SignIn: User with email dsdds@gamail.com not found"}
+2024-11-18 21:54:43 [ERROR]: SignIn: User with email dsdds@gamail.com not found
+2024-11-18 21:56:29 [ERROR]: SignIn: User with email dsdds@gamail.com not found
+2024-11-18 21:58:39 [ERROR]: SignIn: User with email dsdds@gamail.com not found
+2024-11-18 21:58:51 [ERROR]: SignIn: User with email dsdds@gamail.com not found
+2024-11-18 22:03:24 [ERROR]: SignIn: Invalid credentials
+2024-11-18 22:03:25 [ERROR]: SignIn: Invalid credentials
+2024-11-18 22:03:26 [ERROR]: SignIn: Invalid credentials
+2024-11-18 22:03:31 [ERROR]: SignIn: Invalid credentials
+2024-11-18 22:03:46 [ERROR]: SignUp: User with email dsdds@gamail.com already exists
+2024-11-18 22:04:14 [ERROR]: SignUp Error: Validation error
+2024-11-18 22:04:53 [ERROR]: SignUp Error: Validation error
+2024-11-18 22:05:44 [ERROR]: SignUp Error: Validation error
+2024-11-18 22:06:37 [ERROR]: SignUp: User with number 6351829894 already exists
+2024-11-18 22:06:54 [ERROR]: SignIn Error: successResponseWithData is not defined
+2024-11-18 22:07:19 [ERROR]: SignIn Error: successResponseWithData is not defined
+2024-11-18 22:18:43 [ERROR]: SignIn: Invalid credentials
