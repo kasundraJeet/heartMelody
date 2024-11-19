@@ -10,12 +10,10 @@ const {
   googleLoginCallback,
 } = require("../controllers/authController");
 
-
 router.post("/signup", signup);
 router.post("/signin", signin);
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
-
 
 router.get(
   "/google",
@@ -27,7 +25,7 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "/login",
+    failureRedirect: "/sign-in",
     session: false,
   }),
   googleLoginCallback

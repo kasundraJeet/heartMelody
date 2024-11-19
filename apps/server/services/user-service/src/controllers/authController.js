@@ -50,9 +50,6 @@ const signup = async (req, res) => {
   }
 };
 
-
-
-
 const signin = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -238,7 +235,7 @@ const googleLoginCallback = (req, res) => {
   });
 
   // Redirect to frontend with token or send token in response
-  res.redirect(`/google-success?token=${token}`);
+  res.redirect(`/`);
 };
 
 const generateOTP = () => {
@@ -252,5 +249,5 @@ module.exports = {
   signin,
   forgotPassword,
   resetPassword,
-  googleLoginCallback
+  googleLoginCallback,
 };
