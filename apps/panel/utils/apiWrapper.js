@@ -1,14 +1,15 @@
 import { toast } from "vue-sonner";
 import axios from "axios";
 
+
 export const ApiWrapper = async (url, body) => {
   try {
     const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/${url}`,
+      `${process.env.API_KEY}/${url}`,
       body,
       {
         headers: {
-          token: authStore.sessionToken || null,
+          token: null,
         },
       }
     );

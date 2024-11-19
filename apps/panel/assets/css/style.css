@@ -1,0 +1,11 @@
+.layout-wrapper {
+  @apply w-full h-dvh flex items-stretch overflow-hidden;
+}
+
+.sidebar {
+  @apply w-full h-dvh max-w-60 border-r border-border px-2.5 py-3 bg-border bg-opacity-20 flex flex-col justify-between;
+}
+
+.layout-header {
+  @apply w-full border-b border-border py-2 px-2.5 flex items-center justify-between gap-1;
+}
