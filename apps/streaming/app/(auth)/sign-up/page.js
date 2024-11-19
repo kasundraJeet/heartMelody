@@ -181,7 +181,12 @@ export default function SignUp() {
         {/* Social Login Buttons */}
         <div className="space-y-4">
           {/* Google Login Button */}
-          <button className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <button
+            onClick={() => {
+              window.location.href = "http://localhost:1111/api/auth/google";
+            }}
+            className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
             <Image
               src="https://upload.wikimedia.org/wikipedia/commons/5/51/Google.png"
               alt="Google"
@@ -192,17 +197,6 @@ export default function SignUp() {
             Sign Up with Google
           </button>
 
-          {/* Facebook Login Button */}
-          <button className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <Image
-              src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
-              alt="Facebook"
-              width={250}
-              height={42}
-              className="w-5 h-5 mr-2"
-            />
-            Sign Up with Facebook
-          </button>
         </div>
       </div>
     </div>

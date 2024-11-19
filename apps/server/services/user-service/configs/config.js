@@ -2,6 +2,8 @@ require("dotenv").config();
 
 module.exports = {
   jwtSecret: process.env.JWT_SECRET,
+  googleClientID: "your_google_client_id",
+  googleClientSecret: "your_google_client_secret",
   admin:{
     email: process.env.ADMIN_ID,
     pass: process.env.ADMIN_PASS

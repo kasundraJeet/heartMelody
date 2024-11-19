@@ -50,8 +50,8 @@ const signup = async (req, res) => {
   }
 };
 
-const { jwtSecret, admin } = require("../../configs/config");
-const bcrypt = require("bcryptjs");
+
+
 
 const signin = async (req, res) => {
   try {
@@ -230,6 +230,17 @@ const resetPassword = async (req, res) => {
   }
 };
 
+const googleLoginCallback = (req, res) => {
+  const user = req.user;
+
+  const token = jwt.sign({ userId: user.id, role: user.role }, jwtSecret, {
+    expiresIn: "1h",
+  });
+
+  // Redirect to frontend with token or send token in response
+  res.redirect(`/google-success?token=${token}`);
+};
+
 const generateOTP = () => {
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
   successLog.info(`Generated OTP: ${otp}`);
@@ -241,4 +252,5 @@ module.exports = {
   signin,
   forgotPassword,
   resetPassword,
+  googleLoginCallback
 };
