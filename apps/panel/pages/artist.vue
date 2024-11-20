@@ -27,10 +27,61 @@
         <div class="w-full">
             <div class="w-full">
                 <ul class="w-full grid grid-cols-5 gap-5">
-                    <li class="artist-box">
-                        <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRr2C7vN85FNbwRSVH1BGWAl0DRlvDccmWbsb9nhV7mrNYyUcBO"
-                            alt="name" />
-                    </li>
+                    <ContextMenu as="li">
+                        <ContextMenuTrigger class="artist-box group">
+                            <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRr2C7vN85FNbwRSVH1BGWAl0DRlvDccmWbsb9nhV7mrNYyUcBO"
+                                alt="name" />
+                        </ContextMenuTrigger>
+                        <ContextMenuContent class="w-56">
+                            <ContextMenuItem>
+                                <Icon name="solar:user-circle-broken" class="w-5 h-5 mr-2" />
+                                Profile
+                                <ContextMenuShortcut>
+                                    ⌘+P
+                                </ContextMenuShortcut>
+                            </ContextMenuItem>
+                            <ContextMenuItem>
+                                <Icon name="solar:pen-broken" class="w-5 h-5 mr-2" />
+                                Edit
+                                <ContextMenuShortcut>
+                                    ⌘+U
+                                </ContextMenuShortcut>
+                            </ContextMenuItem>
+                            <ContextMenuItem>
+                                <Icon name="solar:music-notes-broken" class="w-5 h-5 mr-2" />
+                                Songs
+                                <ContextMenuShortcut>
+                                    ⌘+S
+                                </ContextMenuShortcut>
+                            </ContextMenuItem>
+                            <ContextMenuSeparator />
+                            <ContextMenuItem as-child>
+                                <AlertDialog>
+                                    <AlertDialogTrigger as-child>
+                                        <Button variant="ghost"
+                                            class="px-2 py-1.5 text-sm text-destructive h-auto justify-between w-full">
+                                            <Icon name="solar:trash-bin-minimalistic-broken" class="w-5 h-5" />
+                                            Delete
+                                            <ContextMenuShortcut>⌘+DEL</ContextMenuShortcut>
+                                        </Button>
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                            <AlertDialogDescription>
+                                                This action cannot be undone. This will permanently delete your account
+                                                and remove your data from our servers.
+                                            </AlertDialogDescription>
+                                        </AlertDialogHeader>
+                                        <AlertDialogFooter>
+                                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                            <AlertDialogAction>Yes, Delete</AlertDialogAction>
+                                        </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                </AlertDialog>
+                            </ContextMenuItem>
+                        </ContextMenuContent>
+                    </ContextMenu>
                 </ul>
             </div>
         </div>
