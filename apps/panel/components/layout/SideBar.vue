@@ -20,6 +20,13 @@ const navLink = [
         link_path: "/",
         link_icon: "solar:plaaylist-minimalistic-linear",
         link_active: ["/"],
+    },
+    {
+        id: "4",
+        link_name: "Artist",
+        link_path: "/artist",
+        link_icon: "solar:user-speak-broken",
+        link_active: ["/"],
     }
 ]
 </script>
