@@ -11,7 +11,29 @@
                             Personal Details
                         </Button>
                     </li>
+                    <li>
+                        <Button class="w-full justify-start" variant="ghost">
+                            <Icon name="solar:gallery-add-broken" class="w-4 h-4" />
+                            Images
+                        </Button>
+                    </li>
+                    <li>
+                        <Button class="w-full justify-start" variant="ghost">
+                            <Icon name="solar:music-note-2-broken" class="w-4 h-4" />
+                            Songs
+                        </Button>
+                    </li>
+                    <li>
+                        <Button class="w-full justify-start" variant="ghost">
+                            <Icon name="solar:turntable-music-note-broken" class="w-4 h-4" />
+                            Albums
+                        </Button>
+                    </li>
                 </ul>
+                <Button class="w-full justify-start" variant="ghost">
+                    <Icon name="solar:code-scan-bold-duotone" class="w-4 h-4" />
+                    Generate By AI
+                </Button>
             </aside>
             <div class="w-full bg-secondary h-full flex flex-col justify-between rounded-lg p-3.5">
                 <div class="w-full h-full">
