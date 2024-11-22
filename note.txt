@@ -1,0 +1,122 @@
+{
+    "id": "26a21",
+    "full_name": "Artist Name",
+    "stage_names": [
+        "Stage Name 1",
+        "Stage Name 2"
+    ],
+    "original_name": "Original Full Name",
+    "biography": "<p>Biography in HTML format</p>",
+    "birth_date": "1990-08-16",
+    "birth_place": "India, Goa",
+    "death_date": "2024-08-16",
+    "debut_year": "2005",
+    "age": 34,
+    "is_adult": true,
+    "gender": "Male",
+    "nationality": "Country Name",
+    "genres": [
+        "Pop",
+        "R&B",
+        "Soul"
+    ],
+    "languages_spoken": [
+        "English",
+        "Spanish"
+    ],
+    "profile_picture": "https://example.com/profile.jpg",
+    "official_website": "https://www.artistwebsite.com",
+    "social_links": {
+        "facebook": "https://www.facebook.com/artist",
+        "twitter": "https://twitter.com/artist",
+        "instagram": "https://www.instagram.com/artist",
+        "youtube": "https://www.youtube.com/artist",
+        "spotify": "https://open.spotify.com/artist"
+    },
+    "albums": [
+        {
+            "id": "album01",
+            "title": "Album Title",
+            "release_date": "2015-06-20",
+            "cover_image": "https://example.com/album.jpg",
+            "genres": [
+                "Pop"
+            ],
+            "track_count": 12,
+            "link": "https://example.com/album"
+        }
+    ],
+    "songs": [
+        {
+            "id": "song01",
+            "title": "Song Title 1",
+            "album_id": "album01",
+            "album_title": "Album Title",
+            "release_date": "2015-06-20",
+            "duration": "3:45",
+            "genres": [
+                "Pop"
+            ],
+            "language": "English",
+            "lyrics_url": "https://example.com/lyrics/song01",
+            "streaming_links": {
+                "spotify": "https://open.spotify.com/track/song01",
+                "apple_music": "https://music.apple.com/song01",
+                "youtube_music": "https://music.youtube.com/song01"
+            }
+        },
+        {
+            "id": "song02",
+            "title": "Song Title 2",
+            "album_id": "album02",
+            "album_title": "Another Album",
+            "release_date": "2018-07-15",
+            "duration": "4:10",
+            "genres": [
+                "R&B"
+            ],
+            "language": "Spanish",
+            "lyrics_url": "https://example.com/lyrics/song02",
+            "streaming_links": {
+                "spotify": "https://open.spotify.com/track/song02",
+                "apple_music": "https://music.apple.com/song02",
+                "youtube_music": "https://music.youtube.com/song02"
+            }
+        }
+    ],
+    "image_gallery": [
+        {
+            "id": "img01",
+            "image_url": "https://example.com/image1.jpg",
+            "votes": 150
+        },
+        {
+            "id": "img02",
+            "image_url": "https://example.com/image2.jpg",
+            "votes": 200
+        }
+    ],
+    "related_artists": [
+        {
+            "id": "related01",
+            "name": "Related Artist 1",
+            "link": "https://example.com/related_artist1"
+        },
+        {
+            "id": "related02",
+            "name": "Related Artist 2",
+            "link": "https://example.com/related_artist2"
+        }
+    ],
+    "awards": [
+        {
+            "id": "award01",
+            "title": "Grammy Award for Best Album",
+            "year": 2018,
+            "description": "Awarded for their groundbreaking album."
+        }
+    ]
+}
+
+
+https://cdn.dribbble.com/userupload/16569112/file/original-3da33bd7e751518ba42ff74e548db840.png?resize=2048x1760&vertical=center
