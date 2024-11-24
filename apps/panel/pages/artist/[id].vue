@@ -8,6 +8,29 @@ const aiGenArtistName = ref('')
 const aiGenArtistDialog = ref(false)
 const aiGenArtistLoader = ref(false)
 const aiGenArtistResult = ref('')
+const selectedArtist = ref('')
+const artistJSON = ref({
+    'full_name': '',
+    'stage_names': [],
+    'original_name': '',
+    'biography': '',
+    'birth_date': '',
+    'birth_place': '',
+    'death_date': '',
+    'debut_year': '',
+    'age': '',
+    'gender': '',
+    'nationality': '',
+    'genres': '',
+    'languages_spoken': '',
+    'official_website': '',
+    'social_links': {
+        "facebook": "",
+        "twitter": "",
+        "instagram": "",
+        "youtube": "",
+    },
+})
 
 function handleActiveTab(tabID) {
     activeTab.value = tabID
@@ -21,7 +44,22 @@ async function handleSearchArtist() {
     }
     try {
         const response = await LastFmApiWrapper(`${runtimeConfig.public.LAST_FM_BASE_URL}?method=artist.search&artist=${aiGenArtistName.value}&api_key=${runtimeConfig.public.LAST_FM_API_KEY}&format=json`);
-        aiGenArtistResult.value = response.result.artistmatches.artist
+        aiGenArtistResult.value = response.results.artistmatches.artist
+    } catch (error) {
+        console.error('Error searching artist:', error);
+    }
+    finally {
+        aiGenArtistLoader.value = false
+    }
+}
+
+async function handleSelectdArtist() {
+    aiGenArtistLoader.value = true
+    try {
+        const response = await LastFmApiWrapper(`${runtimeConfig.public.LAST_FM_BASE_URL}?method=artist.getinfo&artist=${selectedArtist.value}&api_key=${runtimeConfig.public.LAST_FM_API_KEY}&format=json`);
+        artistJSON.value.full_name = response.artist.name
+        artistJSON.value.original_name = response.artist.name
+        aiGenArtistDialog.value = false
     } catch (error) {
         console.error('Error searching artist:', error);
     }
@@ -81,9 +119,10 @@ async function handleSearchArtist() {
 
 
     <Dialog :open="aiGenArtistDialog">
-        <DialogContent class="sm:max-w-lg">
+        <DialogScrollContent class="sm:max-w-lg">
             <DialogHeader>
-                <DialogTitle>AI Generated Artist Infomation</DialogTitle>
+                <DialogTitle> {{ !aiGenArtistResult && aiGenArtistResult.length == 0 ? 'AI Generated Artist Infomation'
+                    : 'Select Artist' }} </DialogTitle>
             </DialogHeader>
             <div class="py-4">
                 <div class="space-y-2" v-if="!aiGenArtistResult && aiGenArtistResult.length == 0">
@@ -92,7 +131,18 @@ async function handleSearchArtist() {
                     </Label>
                     <Input id="artist_name" placeholder="Dua Lipa" v-model="aiGenArtistName" />
                 </div>
-                <div class=""></div>
+                <div v-else>
+                    <ul class="grid grid-cols-3 gap-2.5">
+                        <li class="border rounded-lg" v-for="artist in aiGenArtistResult" :key="artist.listeners"
+                            @click="selectedArtist = artist.name"
+                            :class="selectedArtist == artist.name ? 'border-primary' : 'border-transparent'">
+                            <AspectRatio :ratio="8 / 8">
+                                <img :src="artist.image[1]['#text']" :alt="artist.name"
+                                    class="rounded-md object-cover w-full h-full">
+                            </AspectRatio>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <DialogFooter>
                 <DialogClose as-child>
@@ -100,11 +150,16 @@ async function handleSearchArtist() {
                         Cancel
                     </Button>
                 </DialogClose>
-                <Button type="submit" @click="handleSearchArtist" :disabled="aiGenArtistLoader">
+                <Button v-if="!aiGenArtistResult && aiGenArtistResult.length == 0" @click="handleSearchArtist"
+                    :disabled="aiGenArtistLoader">
                     <Icon name="ri:loader-2-line" class="w-4 h-4 animate-spin" v-if="aiGenArtistLoader" />
                     Search Artist
                 </Button>
+                <Button v-else @click="handleSelectdArtist" :disabled="aiGenArtistLoader || !selectedArtist">
+                    <Icon name="ri:loader-2-line" class="w-4 h-4 animate-spin" v-if="aiGenArtistLoader" />
+                    Set Artist
+                </Button>
             </DialogFooter>
-        </DialogContent>
+        </DialogScrollContent>
     </Dialog>
 </template>
