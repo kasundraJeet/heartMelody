@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@internationalized/date": "^3.6.0",
     "@nuxt/icon": "^1.8.1",
     "@nuxtjs/color-mode": "^3.5.2",
     "@repo/ui": "workspace:*",
